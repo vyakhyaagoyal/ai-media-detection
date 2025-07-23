@@ -1,9 +1,8 @@
-// import './App.css';
+import './App.css';
 import axios from 'axios';
 import { useState } from 'react';
 
 function App() {
-
   const [file, setFile] = useState(null);
 
   // useEffect(() => {
@@ -20,7 +19,7 @@ function App() {
     setFile(e.target.files[0]);
   };
 
-  const handleUpload = async(e) => {
+  const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('profileImage', file);
@@ -47,9 +46,10 @@ function App() {
   return (
     <div>
       <form onSubmit={handleUpload}>
-        <input type='file' onChange={handleFileChange}/>
-        <button type='submit'>Upload</button>
+        <input type='file' onChange={handleFileChange} />
+        <button type='submit' className='bg-blue-600 p-2 rounded text-white'>Upload</button>
       </form>
+      
     </div>
   );
 }

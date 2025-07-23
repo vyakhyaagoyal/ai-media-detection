@@ -7,11 +7,22 @@ const multer = require('multer')
 connectToMongo();
 const app = express();
 const port = 5000;
-const upload = multer({ dest: 'uploads/' }) //upload is a middleware
+// const upload = multer({ dest: 'uploads/' }) //upload is a middleware
 app.use(cors());
+
+const storage = multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'uploads/');
+    },
+    filename:function(req,file,cb){
+        cb(null, `${Date.now()}-${file.originalname}`)
+    }
+});
+const upload = multer({ storage: storage })
 
 app.get('/', (req, res) => {
     res.send('Hello from server');
+    console.log(req.body);
 })
 
 app.use(express.json());
