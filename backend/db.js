@@ -1,9 +1,14 @@
-const mongoose=require("mongoose");
-const mongoURI="mongodb://localhost:27017/";
+const mongoose = require("mongoose");
+const mongoURI = process.env.MONGO_URI;
 
-const connectToMongo=()=>{
-    mongoose.connect(mongoURI);
-    console.log("connected to mongo");
+const connectToMongo = () => {
+    try {
+        mongoose.connect(mongoURI);
+        console.log("connected to mongo");
+    }
+    catch(error){
+        console.error("Error connecting to MongoDB:", error.message);
+    }
 }
 
-module.exports=connectToMongo;
+module.exports = connectToMongo;

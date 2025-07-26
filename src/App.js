@@ -1,7 +1,10 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import topMNCs from './components/Scroll.js';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Home from './components/Home';
 
 function App() {
 
@@ -16,13 +19,14 @@ function App() {
   }, []);
 
   return (
-    <div className='overflow-hidden bg-black'>
-      <ul className='flex gap-8 text-2xl text-white py-5 animate-infinite-scroll'>
-        {topMNCs.concat(topMNCs).map((topMNCs) => {
-          return <li key={topMNCs.company}>{topMNCs.company}</li>;
-        })}
-      </ul>
-      
+    <div className='App'>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      </BrowserRouter>
     </div>
   );
 
