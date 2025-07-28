@@ -1,15 +1,40 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const Signup = () => {
-    const host = "http:localhost:5000";
-    const [auth, setAuth] = useState({ name: "", email: "", password: "" })
+    const host = "http://localhost:5000";
+    const [auth, setAuth] = useState({ name: "", email: "", password: "" });
+    const navigate=useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        axios.post(`${host}/api/auth/createuser`,auth)
+            .then(function (response){
+                console.log(response.data);
+                if(response.data.success){
+                    localStorage.setItem('token', response.data.token);
+                    setTimeout(() => {
+                        navigate("/home");
+                    }, 1000);
+                    
+                }
+                else{
+                    alert("Error: " + response.data.error[0].msg);
+                    setTimeout(()=>{
+                        setAuth({ name: "", email: "", password: "" });
+                    })
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("Unable to create user. Please try again.")
+            });
     }
 
-    const onChange=(e)=>{
-        setAuth({...auth,[e.target.id]:e.target.value});
+    const onChange = (e) => {
+        setAuth({ ...auth, [e.target.id]: e.target.value });
         // console.log(auth);
     }
 

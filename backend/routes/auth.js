@@ -31,7 +31,12 @@ async(req,res)=>{
             email,
             password:hashedPassword
         })
-        res.json({ success: true, user });
+        // res.json({ success: true, user });
+        const data={
+                id:user.id,
+        }
+        var token=jwt.sign(data,process.env.JWT_SECRET);
+        res.json({success:true,token,id: user.id});
     }
     catch(error){
         console.error(error.message);
@@ -60,12 +65,22 @@ async(req,res)=>{
         if(!passwordCompare){
             return res.status(400).json({error: "Please try to login with correct credentials", success:false});
         }
-        res.json({success:true, user});
+        // res.json({success:true, user});
+        const data={
+                id:user.id,
+        }
+        var token=jwt.sign(data,process.env.JWT_SECRET);
+        res.json({success:true,token,id: user.id});
     }
     catch(error){
         console.error(error.message);
         res.status(500).send("Internal Server Error");
     }
 })
+
+//3rd endpoint- Get user credentials using: GET "/api/auth/getuser".
+router.get('/getuser',async(req,res)=>{
+
+});
 
 module.exports=router;
