@@ -6,23 +6,38 @@ import { useNavigate } from 'react-router-dom';
 const Signup = () => {
     const host = "http://localhost:5000";
     const [auth, setAuth] = useState({ name: "", email: "", password: "" });
-    const navigate=useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`${host}/api/auth/createuser`,auth)
-            .then(function (response){
+        axios.post(`${host}/api/auth/createuser`, auth)
+            .then(function (response) {
                 console.log(response.data);
-                if(response.data.success){
+                if (response.data.success) {
                     localStorage.setItem('token', response.data.token);
+                    // Fetch user details after login
+                    axios.get(`${host}/api/auth/getuser`, {
+                        headers: {
+                            'auth-token': localStorage.getItem('token'),
+                        }
+                    })
+                        .then(userRes => {
+                            console.log("User data:", userRes.data);
+                            localStorage.setItem('username', userRes.data.name);
+                        })
+                        .catch(err => {
+                            console.error("Get user error:", err.response?.data || err.message);
+                        });
+                        alert("User created successfully!");
                     setTimeout(() => {
                         navigate("/login");
                     }, 1000);
-                    
+
                 }
-                else{
+                else {
                     alert("Error: " + response.data.error[0].msg);
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         setAuth({ name: "", email: "", password: "" });
                     })
                 }
@@ -55,10 +70,10 @@ const Signup = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="password" value={auth.password} onChange={onChange} />
+                        <input type={showPassword ? "text" : "password"} className="form-control" id="password" value={auth.password} onChange={onChange} />
                     </div>
                     <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="checkbox" />
+                        <input type="checkbox" className="form-check-input" id="checkbox" checked={showPassword} onChange={() => setShowPassword(!showPassword)} />
                         <label className="form-check-label" htmlFor="checkbox">Show password</label>
                     </div>
                     <button type="submit" className="btn btn-dark">Signup</button>
