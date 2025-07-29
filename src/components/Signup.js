@@ -16,7 +16,7 @@ const Signup = () => {
                 if(response.data.success){
                     localStorage.setItem('token', response.data.token);
                     setTimeout(() => {
-                        navigate("/home");
+                        navigate("/login");
                     }, 1000);
                     
                 }

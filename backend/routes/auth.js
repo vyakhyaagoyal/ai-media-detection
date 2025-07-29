@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {body, validationResult} = require('express-validator');
 const User = require('../models/User');
-// const fetchuser=require('./middleware/fetchuser');
+const fetchUser=require('../middleware/fetchUser');
 
 
 //1st endpoint- Create a user using: POST "/api/auth/createuser". No login required
@@ -79,8 +79,19 @@ async(req,res)=>{
 })
 
 //3rd endpoint- Get user credentials using: GET "/api/auth/getuser".
-router.get('/getuser',async(req,res)=>{
-
+router.get('/getuser',fetchUser,async(req,res)=>{
+    try{
+        const userID=req.user.id;
+        const user=await User.findById(userID).select("-password");
+        console.log("User fetched:", user);
+        console.log("token received");
+        res.send(user);
+        
+    }
+    catch(error){
+        console.error(error.message);
+        res.status(500).send('Internal server error');
+    }
 });
 
 module.exports=router;

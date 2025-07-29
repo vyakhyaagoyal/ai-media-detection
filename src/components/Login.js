@@ -27,6 +27,8 @@ const Login = () => {
           setAuth({email:"",password:""});
         },1000);
       }
+
+      
     })
     
     .catch(function(error){
