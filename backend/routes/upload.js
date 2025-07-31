@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/upload');
+const {storage}=require('../utils/cloudinary');
 
 router.post('/upload', upload.single('media'), (req, res) => {
     try {
         res.status(200).json({
-            message: 'File uploaded successfully',
-            file: req.file,
-            path: req.file.path
+            message: 'Upload successful',
+            url:req.file.path,
+            public_url:req.file.filename,
         });
+        console.log("upload successful",req.file);
     }
     catch (error) {
         console.error("Error uploading file", error);

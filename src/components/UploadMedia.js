@@ -19,12 +19,10 @@ const UploadMedia = () => {
         formData.append('media', file);
 
         try {
-            const res = await axios.post(`${host}/api/uploads/upload`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log("File uploaded successfully:", res.data);
+            const res = await axios.post(`${host}/api/uploads/upload`, formData);
+            console.log("successful! cloudinary url:",res.data.url, "data:",res.data);
+            
+            // console.log("File uploaded successfully:", res.data);
             // setResponse();
             setFile(null);
             if (fileInputRef.current) fileInputRef.current.value = ""; // Clear input
