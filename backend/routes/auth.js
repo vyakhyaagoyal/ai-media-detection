@@ -69,6 +69,7 @@ async(req,res)=>{
         const data={
                 id:user.id,
         }
+        
         var token=jwt.sign(data,process.env.JWT_SECRET);
         res.json({success:true,token,id: user.id});
     }
