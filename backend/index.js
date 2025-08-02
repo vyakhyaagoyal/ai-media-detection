@@ -10,6 +10,7 @@ app.use(express.json()); //must be before routes
 app.use(cors());
 
 app.use('/api/uploads',uploadRoute);
+app.use('/api/analyze',require('./routes/analyze'));
 const port = 5000;
 // console.log("MONGO_URI is:", process.env.MONGO_URI);
 
