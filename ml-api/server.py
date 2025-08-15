@@ -1,20 +1,16 @@
 from flask import Flask, request, jsonify
-from detect import detect
-import os
+from detect import detect_from_url  # a new function for URLs
 
 app = Flask(__name__)
 
 @app.route("/detect", methods=["POST"])
 def detect_api():
-    if "file" not in request.files:
-        return jsonify({"error": "No file uploaded"}), 400
+    data = request.get_json()
+    if not data or "url" not in data:
+        return jsonify({"error": "No URL provided"}), 400
 
-    file = request.files["file"]
-    file_path = os.path.join("uploads", file.filename)
-    file.save(file_path)
-
-    result = detect(file_path)
-    os.remove(file_path)
+    image_url = data["url"]
+    result = detect_from_url(image_url)
     return jsonify(result)
 
 if __name__ == "__main__":
