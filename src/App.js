@@ -6,6 +6,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
 import UploadMedia from './components/UploadMedia';
+import Detect from './components/Detect';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/upload" element={<UploadMedia />} />
+        <Route path="/detect" element={<Detect />} />
       </Routes>
       </BrowserRouter>
     </div>
