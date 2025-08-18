@@ -23,6 +23,11 @@ const UploadMedia = () => {
             const uploadedURL=uploadRes.data.url;
             console.log("successful! cloudinary url:",uploadedURL, "data:",uploadRes.data);
             
+            const detectRes=await axios.post(`${host}/detect`, {url:uploadedURL});
+
+            console.log("Detection result:", detectRes.data);
+            setResult(detectRes.data);
+
             setFile(null);
             if (fileInputRef.current) fileInputRef.current.value = ""; // Clear input
         }
@@ -39,8 +44,18 @@ const UploadMedia = () => {
                 <input type='file' accept='image/*,video/*' ref={fileInputRef} onChange={(e) => {
                     setFile(e.target.files[0]);
                 }} />
-                <button className='bg-neutral-800 text-white p-2 rounded-md'  type='submit'>Upload</button>
+                <button className='bg-neutral-800 text-white p-2 rounded-md'  type='submit'>Upload & Detect</button>
             </form>
+
+            {/* for result */}
+            {result && (
+                <div>
+                    <h2>Detection Result:</h2>
+                    <p>Label: {result.label}</p>
+                    <p>Confidence: {result.confidence}%</p>
+                </div>
+            )}
+
         </div>
     )
 }
