@@ -4,7 +4,7 @@ import axios from 'axios';
 const UploadMedia = () => {
     const host = "http://localhost:5000";
     const [file, setFile] = useState(null);
-    // const [response,setResponse]=useState(null);
+    const [result,setResult]=useState(null); //final detection result
     const fileInputRef = useRef(null);
 
     const handleUpload = async (e) => {
@@ -19,11 +19,10 @@ const UploadMedia = () => {
         formData.append('media', file);
 
         try {
-            const res = await axios.post(`${host}/api/uploads/upload`, formData);
-            console.log("successful! cloudinary url:",res.data.url, "data:",res.data);
+            const uploadRes = await axios.post(`${host}/api/uploads/upload`, formData);
+            const uploadedURL=uploadRes.data.url;
+            console.log("successful! cloudinary url:",uploadedURL, "data:",uploadRes.data);
             
-            // console.log("File uploaded successfully:", res.data);
-            // setResponse();
             setFile(null);
             if (fileInputRef.current) fileInputRef.current.value = ""; // Clear input
         }
