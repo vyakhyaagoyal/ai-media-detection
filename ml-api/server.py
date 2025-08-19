@@ -24,9 +24,10 @@ import requests
 # import numpy as np
 import tempfile
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app) 
 # Load your deepfake detection model
 model_path = os.path.join(os.path.dirname(__file__), "xception-b5690688.pth")
 model = TransferModel(model_path)  
@@ -56,7 +57,8 @@ def detect():
 
         return jsonify({
             "label": label,               # "REAL" or "FAKE"
-            "confidence": round(confidence * 100, 2)  # %
+            "confidence": round(confidence * 100, 2),  # %
+            "url":media_url
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500

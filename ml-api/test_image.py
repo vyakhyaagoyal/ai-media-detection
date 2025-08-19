@@ -108,6 +108,7 @@ from facenet_pytorch import MTCNN
 import os
 import tempfile
 import requests
+import sys
 
 # --- 1. Load model ---
 model_path = r"D:\LEARNZZZ\AI media detection\ml-api\xception-b5690688.pth"
@@ -147,18 +148,18 @@ def predict_image(image_pil):
 
 
 def download_if_url(file_path_or_url):
-    """Download remote file if URL, else return local path"""
     if file_path_or_url.startswith("http://") or file_path_or_url.startswith("https://"):
         response = requests.get(file_path_or_url, stream=True)
         if response.status_code != 200:
             raise ValueError(f"Failed to download file: {file_path_or_url}")
-        
-        # Detect extension
-        ext = ".mp4" if ".mp4" in file_path_or_url else ".jpg"
+        # Try to get extension from URL
+        ext = os.path.splitext(file_path_or_url)[-1].lower()
+        if ext not in [".jpg", ".jpeg", ".png", ".bmp", ".mp4", ".avi", ".mov", ".mkv"]:
+            ext = ".jpg"  # fallback
         tmp = tempfile.NamedTemporaryFile(delete=False, suffix=ext)
         tmp.write(response.content)
         tmp.close()
-        return tmp.name, True  # path, is_temp
+        return tmp.name, True
     return file_path_or_url, False
 
 
@@ -168,8 +169,9 @@ def predict_file(file_path_or_url, frame_skip=30):
     ext = os.path.splitext(file_path)[-1].lower()
 
     if ext in [".jpg", ".jpeg", ".png", ".bmp"]:
-        # Single image
         image = cv2.imread(file_path)
+        if image is None:
+            raise ValueError(f"Could not read image file: {file_path}")
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image_pil = Image.fromarray(image_rgb)
         result = predict_image(image_pil)
@@ -212,16 +214,27 @@ def predict_file(file_path_or_url, frame_skip=30):
 
 # --- 4. Test ---
 if __name__ == "__main__":
-    # Works with local files:
-    file_path = "../public/test2.jpg"
-    # file_path = "../public/test_video.mp4"
+    try:
+        file_path = sys.argv[1] if len(sys.argv) > 1 else "../public/test2.jpg"
+        real_conf, fake_conf = predict_file(file_path)
+        msg = "Deepfake detected!" if fake_conf > real_conf else "Looks real!"
 
-    # Works with Cloudinary files:
-    # file_path = "https://res.cloudinary.com/vyakhya/image/upload/v1755436974/ai-media-detection%28uploads%29/1755436967934-arya.jpg.jpg"
-    # file_path = "https://res.cloudinary.com/xxx/video/upload/sample.mp4"
+        import json
+        output = {
+            "real_confidence": round(real_conf, 2),
+            "fake_confidence": round(fake_conf, 2),
+            "message": msg
+        }
+        print(json.dumps(output))
+    except Exception as e:
+        print(json.dumps({"error": str(e)}))
 
-    real_conf, fake_conf = predict_file(file_path)
-    msg = "Deepfake detected!" if fake_conf > real_conf else "Looks real!"
-    print(f"Real Confidence: {real_conf:.2f}%")
-    print(f"Deepfake Confidence: {fake_conf:.2f}%")
-    print(msg)
+
+
+#     output = {
+#     "status": "success",
+#     "prediction": "FAKE",   # or "REAL"
+#     "confidence": 0.92
+# }
+
+# print(json.dumps(output))

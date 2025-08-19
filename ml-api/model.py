@@ -69,7 +69,7 @@ class TransferModel(nn.Module):
         self.model.to(device)
         self.model.eval()
 
-        print(f"Loaded {len(pretrained_dict)}/{len(model_dict)} layers from checkpoint.")
+        #print(f"Loaded {len(pretrained_dict)}/{len(model_dict)} layers from checkpoint.")
 
         # Preprocessing for Xception input
         self.transform = transforms.Compose([
