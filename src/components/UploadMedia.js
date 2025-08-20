@@ -4,14 +4,18 @@ import axios from 'axios';
 const UploadMedia = () => {
     const host = "http://localhost:5000";
     const [file, setFile] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null); //final detection result
     const fileInputRef = useRef(null);
 
     const handleUpload = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setResult(null);
 
         if (!file) {
             alert("Please select a file to upload");
+            setLoading(false);
             return;
         }
 
@@ -24,8 +28,9 @@ const UploadMedia = () => {
 
             const uploadedURL = uploadRes.data.url;
             console.log("successful! cloudinary url:", uploadedURL, "data:", uploadRes.data);
+            setResult(uploadRes.data);
 
-            const detectRes = await axios.post(`${host}/api/detect`, { filePath: uploadedURL});
+            const detectRes = await axios.post(`${host}/api/detect`, { filePath: uploadedURL });
 
             console.log("Detection result:", detectRes.data);
             setResult(detectRes.data);
@@ -35,6 +40,9 @@ const UploadMedia = () => {
         }
         catch (error) {
             console.error("error", error);
+        }
+        finally {
+            setLoading(false);
             setFile(null); // Clear state
             if (fileInputRef.current) fileInputRef.current.value = ""; // Clear input
         }
@@ -49,17 +57,28 @@ const UploadMedia = () => {
                 <button className='bg-neutral-800 text-white p-2 rounded-md' type='submit'>Upload & Detect</button>
             </form>
 
+            {loading && (
+                <p>Detecting.... please wait for results</p>
+            )}
+
             {/* for result */}
-            {result && (
+            {!loading && result && (
                 <div>
-                    <h2>Detection Result:</h2>
-                    <p>Label: {result.label}</p>
-                    <p>Confidence: {result.confidence}%</p>
+                    <h1>Detection Result:</h1>
+                    <p><strong>Real Confidence:</strong> {result.real_confidence}%</p>
+                    <p><strong>Fake Confidence:</strong> {result.fake_confidence}%</p>
+                    <p><strong>Label:</strong> {result.message}</p>
+
+                    <div>
+                        <h1 className='mt-8'>Image preview:</h1>
+                        <img src={result.file} alt="Uploaded media preview" style={{height:'400px',width:'auto', marginTop:'10px'}}></img>
+                    </div>
                 </div>
             )}
 
         </div>
     )
 }
+
 
 export default UploadMedia
