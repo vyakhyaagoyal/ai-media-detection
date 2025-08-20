@@ -25,12 +25,10 @@ const UploadMedia = () => {
             const uploadedURL = uploadRes.data.url;
             console.log("successful! cloudinary url:", uploadedURL, "data:", uploadRes.data);
 
-            const detectRes = await axios.post(`${host}/api/detect`, { url: uploadedURL,test: true })
-                .then(res => console.log(res.data))
-                .catch(err => console.error(err));
+            const detectRes = await axios.post(`${host}/api/detect`, { filePath: uploadedURL});
 
-            // console.log("Detection result:", detectRes.data);
-            // setResult(detectRes.data);
+            console.log("Detection result:", detectRes.data);
+            setResult(detectRes.data);
 
             setFile(null);
             if (fileInputRef.current) fileInputRef.current.value = ""; // Clear input

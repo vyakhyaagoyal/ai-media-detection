@@ -7,13 +7,16 @@ const router = express.Router();
 router.post('/', (req, res) => {
   console.log("🔥 Detect route hit");
 
-  // example: take file path from req.body
-  const filePath = req.body.filePath || path.join(__dirname, '..', '..', 'public', 'test2.jpg');
+  // Take filePath (should be Cloudinary URL) from frontend request
+  const filePath = req.body.filePath;
+  if (!filePath) {
+    return res.status(400).json({ error: "filePath (Cloudinary URL) is required" });
+  }
 
   const scriptPath = path.join(__dirname, '..', '..', 'ml-api', 'test_image.py');
-  console.log("👉 Running Python script at:", scriptPath);
+  console.log("👉 Running Python script at:", scriptPath, "with file:", filePath);
 
-  const python = spawn('python', [scriptPath, filePath]); // pass filePath as argument
+  const python = spawn('python', [scriptPath, filePath]);
 
   let result = '';
   python.stdout.on('data', (data) => {
@@ -24,22 +27,19 @@ router.post('/', (req, res) => {
     console.error(`stderr: ${data}`);
   });
 
-python.on('close', (code) => {
-  console.log(`Python script finished with code ${code}`);
-  
-  try {
-    // take only the last line (assuming JSON is the final print)
-    const lines = result.trim().split("\n");
-    const lastLine = lines[lines.length - 1];
+  python.on('close', (code) => {
+    console.log(`Python script finished with code ${code}`);
+    try {
+      const lines = result.trim().split("\n");
+      const lastLine = lines[lines.length - 1];
 
-    const parsed = JSON.parse(lastLine);
-    res.json(parsed);
-  } catch (err) {
-    console.error("❌ Failed to parse Python output:", result);
-    res.status(500).json({ error: "Invalid output from Python" });
-  }
-});
-
+      const parsed = JSON.parse(lastLine);
+      res.json(parsed);
+    } catch (err) {
+      console.error("❌ Failed to parse Python output:", result);
+      res.status(500).json({ error: "Invalid output from Python" });
+    }
+  });
 });
 
 
