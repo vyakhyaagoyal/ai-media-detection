@@ -6,10 +6,9 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
 import UploadMedia from './components/UploadMedia';
-// import Detect from './components/Detect';
+import Navbar from './components/Navbar';
 
 function App() {
-
   useEffect(() => {
     axios.get('http://localhost:5000/')
       .then((res) => {
@@ -23,13 +22,14 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
+      <Navbar/>
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/upload" element={<UploadMedia />} />
-        {/* <Route path="/detect" element={<Detect />} /> */}
+        
       </Routes>
       </BrowserRouter>
     </div>
