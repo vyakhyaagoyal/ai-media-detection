@@ -49,7 +49,7 @@ const UploadMedia = () => {
     }
 
     return (
-        <div>
+        <div className='mx-5 mt-20 py-5'>
             <form onSubmit={handleUpload}>
                 <input type='file' accept='image/*,video/*' ref={fileInputRef} onChange={(e) => {
                     setFile(e.target.files[0]);
