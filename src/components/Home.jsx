@@ -9,7 +9,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+    <div className="flex flex-col items-center justify-center h-screen">
       <h1
         className="text-4xl md:text-6xl text-center font-normal"
         style={{

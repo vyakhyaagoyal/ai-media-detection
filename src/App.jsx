@@ -1,45 +1,27 @@
 import './App.css';
 import axios from 'axios';
-import React, { useEffect } from 'react';
-import { BrowserRouter, useLocation } from 'react-router-dom';
-import Signup from './components/Signup';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter,Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
-import Home from './components/Home';
-import UploadMedia from './components/UploadMedia';
 import Navbar from './components/Navbar';
-import About from './components/About';
+import ScrollToSection from './components/ScrollToSection';
+import Signup from './components/Signup';
 import Contact from './components/Contact';
-
-function ScrollToSection() {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname !== "/") {
-      const newPath = location.pathname.replace("/", "");
-      const section = document.getElementById(newPath);
-      if (section) {
-        section.scrollIntoView({ behaviour: "smooth" });
-      }
-      else {
-        window.scrollTo({ top: 0, behaviour: "smooth" });
-      }
-    }
-  }, [location]);
-
-  return (
-    <div>
-        {/* <section id="/home" /><Home /> */}
-        <section id={["", "home"]} /><Home />
-        <section id="signup" /><Signup />
-        <section id="login" /><Login />
-        <section id="upload" /><UploadMedia />
-        <section id="about" /><About />
-        <section id="contact" /><Contact />
-    </div>
-  );
-}
+import Home from './components/Home';
+import About from './components/About';
 
 function App() {
+
+  const [isAuthenticated,setisAuthenticated]=useState(false);
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      console.log(localStorage.getItem('token'));
+      setisAuthenticated(true);
+    }
+    else{setisAuthenticated(false);}
+  }, []);
+
   useEffect(() => {
     axios.get('http://localhost:5000/')
       .then((res) => {
@@ -52,8 +34,15 @@ function App() {
 
   return (
       <BrowserRouter>
-        <Navbar />
-        <ScrollToSection />
+        <Navbar isAuthenticated={isAuthenticated}/>
+        <Routes>
+          <Route path="/home" element={<Home/>} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/contact" element={<Contact/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<Signup/>} />
+          <Route path="/" element={isAuthenticated ? <ScrollToSection/> : <Signup/> } />
+        </Routes>
       </BrowserRouter>
   );
 

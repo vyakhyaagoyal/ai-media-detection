@@ -6,3 +6,12 @@
     margin: 0;
     padding: 0;
 }
+
+body{
+    background-image: url('/bg-grainy.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+    color: white;
+    margin-top: 8rem;
+    padding:0 0.5rem
+}
