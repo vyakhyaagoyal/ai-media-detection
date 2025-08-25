@@ -29,12 +29,12 @@ function ScrollToSection() {
   return (
     <div>
         {/* <section id="/home" /><Home /> */}
-        <section id={["/", "/home"]} /><Home />
-        <section id="/signup" /><Signup />
-        <section id="/login" /><Login />
-        <section id="/upload" /><UploadMedia />
-        <section id="/about" /><About />
-        <section id="/contact" /><Contact />
+        <section id={["", "home"]} /><Home />
+        <section id="signup" /><Signup />
+        <section id="login" /><Login />
+        <section id="upload" /><UploadMedia />
+        <section id="about" /><About />
+        <section id="contact" /><Contact />
     </div>
   );
 }

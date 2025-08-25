@@ -67,7 +67,7 @@ const UploadMedia = () => {
                     <h1>Detection Result:</h1>
                     <p><strong>Real Confidence:</strong> {result.real_confidence}%</p>
                     <p><strong>Fake Confidence:</strong> {result.fake_confidence}%</p>
-                    <p><strong>Label:</strong> {result.message}</p>
+                    <p><strong>Message:</strong> {result.message}</p>
 
                     <div>
                         <h1 className='mt-8'>Image preview:</h1>
