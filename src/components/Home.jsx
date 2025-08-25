@@ -5,7 +5,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate('/upload');
+    navigate('/home#upload');
   };
 
   return (
@@ -21,7 +21,7 @@ const Home = () => {
       >
         Want to check your media authenticity?
       </h1>
-      <h1 className="text-lg md:text-2xl text-center mt-4 text-gray-700" style={{
+      <h1 className="text-lg md:text-2xl text-center mt-4 text-white" style={{
         fontFamily: '"News Cycle", sans-serif',
         fontWeight: 500,
         fontStyle: "normal"

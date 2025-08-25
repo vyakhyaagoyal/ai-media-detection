@@ -50,7 +50,8 @@ const UploadMedia = () => {
 
     return (
         <div className='h-screen'>
-            <form onSubmit={handleUpload}>
+            <h1 className='text-8xl'>Upload & Detect your Media here</h1>
+            <form onSubmit={handleUpload} className='mt-5'>
                 <input type='file' accept='image/*,video/*' ref={fileInputRef} onChange={(e) => {
                     setFile(e.target.files[0]);
                 }} />

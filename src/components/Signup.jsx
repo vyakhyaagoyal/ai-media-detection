@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-const Signup = () => {
+const Signup = ({setisAuthenticated}) => {
     const host = "http://localhost:5000";
     const [auth, setAuth] = useState({ name: "", email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
@@ -25,6 +25,7 @@ const Signup = () => {
                         .then(userRes => {
                             console.log("User data:", userRes.data);
                             localStorage.setItem('username', userRes.data.name);
+                            setisAuthenticated(true);
                         })
                         .catch(err => {
                             console.error("Get user error:", err.response?.data || err.message);
@@ -60,16 +61,16 @@ const Signup = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>
-                        <input type="name" className="form-control" id="name" value={auth.name} onChange={onChange} />
+                        <input type="name" className="form-control" id="name" value={auth.name} onChange={onChange} placeholder='Enter name'/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" value={auth.email} onChange={onChange} />
+                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" value={auth.email} onChange={onChange} placeholder='Email'/>
                         <div id="emailHelp" className="form-text text-white">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type={showPassword ? "text" : "password"} className="form-control" id="password" value={auth.password} onChange={onChange} />
+                        <input type={showPassword ? "text" : "password"} className="form-control" id="password" value={auth.password} onChange={onChange} placeholder='Password'/>
                     </div>
                     <div className="mb-3 form-check">
                         <input type="checkbox" className="form-check-input" id="checkbox" checked={showPassword} onChange={() => setShowPassword(!showPassword)} />

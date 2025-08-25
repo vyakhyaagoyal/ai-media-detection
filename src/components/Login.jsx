@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setisAuthenticated}) => {
   const host = "http://localhost:5000";
   const [auth, setAuth] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +28,7 @@ const Login = () => {
         .then(userRes => {
           console.log("User data:", userRes.data);
           localStorage.setItem('username',userRes.data.name);
+          setisAuthenticated(true);
         })
         .catch(err => {
           console.error("Get user error:", err.response?.data || err.message);
