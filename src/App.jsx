@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import ScrollToSection from './components/ScrollToSection';
 import Signup from './components/Signup';
 import Contact from './components/Contact';
-//import Home from './components/Home';
+import LandingPage from './components/LandingPage';
 import About from './components/About';
 import UploadMedia from './components/UploadMedia';
 
@@ -36,8 +36,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar isAuthenticated={isAuthenticated}/>
+        <Navbar isAuthenticated={isAuthenticated} setisAuthenticated={setisAuthenticated}/>
         <Routes>
+          <Route path="/landingPage" element={<LandingPage />} />
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={isAuthenticated ? <ScrollToSection/> : <Signup/> } />
           <Route path="/about" element={isAuthenticated ? <About/> : <Signup/>} />
@@ -45,9 +46,9 @@ function App() {
           <Route path="/upload" element={isAuthenticated ? <UploadMedia/> : <Signup/>} />
 
           {/* Auth routes */}
-          <Route path="/login" element={<Login/>} setisAuthenticated={setisAuthenticated}/>
-          <Route path="/signup" element={<Signup/>} setisAuthenticated={setisAuthenticated}/>
-          
+          <Route path="/login" element={<Login setisAuthenticated={setisAuthenticated}/>}/>
+          <Route path="/signup" element={<Signup setisAuthenticated={setisAuthenticated}/>}/>
+
         </Routes>
       </BrowserRouter>
       </div>

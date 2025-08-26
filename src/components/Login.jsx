@@ -54,7 +54,7 @@ const Login = ({setisAuthenticated}) => {
   }
 
   return (
-    <div>
+    <div className='min-h-dvh overflow-hidden m-3'>
       <form className='m-3' onSubmit={handleSubmit}>
         <h1 className='text-4xl mb-4'>Login</h1>
         <div className="form-group mb-3">

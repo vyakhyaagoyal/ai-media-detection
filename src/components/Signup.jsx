@@ -55,7 +55,7 @@ const Signup = ({setisAuthenticated}) => {
     }
 
     return (
-        <div>
+        <div className='min-h-dvh overflow-hidden'>
             <h1 className='text-5xl m-3 mb-4'>Signup</h1>
             <div className="m-3">
                 <form onSubmit={handleSubmit}>

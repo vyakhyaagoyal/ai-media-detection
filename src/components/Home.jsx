@@ -26,10 +26,10 @@ const Home = () => {
         fontWeight: 500,
         fontStyle: "normal"
       }}>
-        Upload your media file here, and we'll <span className='text-blue-800'>analyze</span> it for you!
+        Upload your media file here, and we'll <span className='text-purple-400'>analyze</span> it for you!
       </h1>
       <button
-        className="bg-blue-800 hover:bg-blue-900 text-white text-xl md:text-2xl px-6 py-3 rounded-2xl mt-6 shadow-lg transition-transform duration-200 hover:scale-105"
+        className="bg-gradient-to-r from-purple-700 to-pink-700 hover:bg-blue-900 text-white text-xl font-semibold md:text-2xl px-6 py-3 rounded-2xl mt-6 shadow-lg transition-transform duration-200 hover:scale-105"
         onClick={handleNavigate}
       >
         Let's Go!
