@@ -10,7 +10,7 @@ const LandingPage = () => {
             setProgress((prev) => {
                 if (prev >= 100) {
                     clearInterval(interval);
-                    navigate('/login');
+                    navigate('/home');
                     return 100;
                     
                 }

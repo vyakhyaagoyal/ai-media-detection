@@ -50,7 +50,15 @@ const UploadMedia = () => {
 
     return (
         <div className='h-screen'>
-            <h1 className='text-8xl'>Upload & Detect your Media here</h1>
+            <h1 className='text-8xl mt-28 text-center'
+                style={{
+                    fontFamily: '"Patua One", "serif"',
+                    fontWeight: 300,
+                    fontStyle: "normal",
+                    fontSize: "6rem",
+                    color:"lightgray"
+                }}
+            >Upload & Detect your <span className='block text-7xl'>Media here</span></h1>
             <form onSubmit={handleUpload} className='mt-5'>
                 <input type='file' accept='image/*,video/*' ref={fileInputRef} onChange={(e) => {
                     setFile(e.target.files[0]);
@@ -59,7 +67,7 @@ const UploadMedia = () => {
             </form>
 
             {loading && (
-                <p>Detecting.... please wait for results</p>
+                <p>Detecting... please wait for results</p>
             )}
 
             {/* for result */}
@@ -72,7 +80,7 @@ const UploadMedia = () => {
 
                     <div>
                         <h1 className='mt-8'>Image preview:</h1>
-                        <img src={result.file} alt="Uploaded media preview" style={{height:'400px',width:'auto', marginTop:'10px'}}></img>
+                        <img src={result.file} alt="Uploaded media preview" style={{ height: '400px', width: 'auto', marginTop: '10px' }}></img>
                     </div>
                 </div>
             )}

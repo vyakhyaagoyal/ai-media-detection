@@ -39,7 +39,7 @@ function App() {
         <Navbar isAuthenticated={isAuthenticated} setisAuthenticated={setisAuthenticated}/>
         <Routes>
           <Route path="/landingPage" element={<LandingPage />} />
-          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={isAuthenticated ? <ScrollToSection/> : <Signup/> } />
           <Route path="/about" element={isAuthenticated ? <About/> : <Signup/>} />
           <Route path="/contact" element={isAuthenticated ? <Contact/> : <Signup/>} />

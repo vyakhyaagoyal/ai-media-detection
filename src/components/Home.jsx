@@ -16,7 +16,8 @@ const Home = () => {
           fontFamily: '"Patua One", "serif"',
           fontWeight: 300,
           fontStyle: "normal",
-          fontSize: "6rem"
+          fontSize: "6rem",
+          color:"lightgray"
         }}
       >
         Want to check your media authenticity?
