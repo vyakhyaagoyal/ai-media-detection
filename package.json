@@ -14,6 +14,7 @@
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
+    "framer-motion": "^12.23.12",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.5",
     "multer": "^2.0.2",
@@ -24,13 +25,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-  "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\" \"npm run flask\"",
-  "server": "node backend/index.js",
-  "client": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "flask": "python ./ml-api/server.py"
-},
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\" \"npm run flask\"",
+    "server": "node backend/index.js",
+    "client": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "flask": "python ./ml-api/server.py"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
