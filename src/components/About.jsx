@@ -6,7 +6,7 @@ const About = () => {
 
       {/* 1st card */}
       
-      <section id='about' className='h-screen w-full bg-blue-950 rounded-3xl sticky top-3 scroll-mt-20'>
+      <section id='about' className='h-screen w-full bg-blue-950 rounded-3xl sticky top-3 scroll-mt-24'>
         <h1 className='text-8xl flex items-center justify-center mt-24'
         style={{
           fontFamily: '"Patua One", "serif"',
