@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 export default function Navbar({ isAuthenticated, setisAuthenticated }) {
     const [scrolled, setScrolled] = useState(false);
     const [inLogin, setinLogin] = useState(false);
-    const [isLanding, setisLanding] = useState(false);
+    const [isLanding, setisLanding] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export default function Navbar({ isAuthenticated, setisAuthenticated }) {
 
     return (
         (!isLanding &&
-            <nav className={"fixed top-8 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl flex items-center justify-between px-6 py-2 rounded-full bg-white/20 backdrop-blur-lg border border-white/30"}>
+            <nav className={"fixed top-5 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl flex items-center justify-between px-6 py-2 rounded-full bg-white/20 backdrop-blur-lg border border-white/30 z-50"}>
 
                 <div className="flex items-center space-x-2">
                     {isAuthenticated ?

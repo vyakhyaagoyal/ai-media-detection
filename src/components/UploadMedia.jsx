@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios';
+import Toast from './Toast';
 
 const UploadMedia = () => {
     const host = "http://localhost:5000";
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null); //final detection result
+    const [showToast, setShowToast] = useState("");
+    const [hovered,setHovered]=useState(false);
     const fileInputRef = useRef(null);
 
     const handleUpload = async (e) => {
@@ -14,7 +17,9 @@ const UploadMedia = () => {
         setResult(null);
 
         if (!file) {
-            alert("Please select a file to upload");
+            setShowToast("Please select a file to upload");
+            setTimeout(() => setShowToast(""), 3000);
+
             setLoading(false);
             return;
         }
@@ -56,19 +61,39 @@ const UploadMedia = () => {
                     fontWeight: 300,
                     fontStyle: "normal",
                     fontSize: "6rem",
-                    color:"lightgray"
+                    color: "lightgray"
                 }}
             >Upload & Detect your <span className='block text-7xl'>Media here</span></h1>
-            <form onSubmit={handleUpload} className='mt-5'>
-                <input type='file' accept='image/*,video/*' ref={fileInputRef} onChange={(e) => {
+            <form onSubmit={handleUpload} className='m-5 p-2'>
+                {/* <input type='file' accept='image/*,video/*' ref={fileInputRef} onChange={(e) => {
                     setFile(e.target.files[0]);
-                }} />
+                }} /> */}
+                <label className="cursor-pointer px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 
+                  text-white font-semibold rounded-2xl shadow-lg hover:scale-105 transition text-center">
+                    Choose File
+                    <input type="file" hidden onChange={(e) => {
+                        setFile(e.target.files[0]);
+                    }} />
+                </label>
+
+                {/* selected file */}
+                <div className='flex flex-col text-center m-2'>
+                    {file && (
+                        <p className='text-white'>Selected file: {file.name}</p>
+                    )}
+                </div>
+
+                {/* Upload and detect button */}
+                <div className='text-center m-5'>
                 <button className='bg-neutral-800 text-white p-2 rounded-md' type='submit'>Upload & Detect</button>
+                </div>
             </form>
 
-            {loading && (
-                <p>Detecting... please wait for results</p>
-            )}
+            <div className='mt-5'>
+                {loading && (
+                    <p>Detecting... please wait for results</p>
+                )}
+            </div>
 
             {/* for result */}
             {!loading && result && (
@@ -85,6 +110,7 @@ const UploadMedia = () => {
                 </div>
             )}
 
+            {showToast && <Toast message={showToast} onClose={() => setShowToast("")} warning={"Alert!"} type="warning" />}
         </div>
     )
 }
