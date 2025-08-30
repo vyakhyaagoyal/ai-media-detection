@@ -1,126 +1,87 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 
 const Contact = () => {
   return (
     <div className='min-h-screen'>
-      {/* <section
-        className="min-h-screen w-full bg-blue-950 rounded-3xl"
-      > */}
-        <h1 className='text-8xl mt-28 flex items-center justify-center'
-          style={{
-            fontFamily: '"Patua One", "serif"',
-            fontWeight: 300,
-            fontStyle: "normal",
-            fontSize: "6rem",
-            color: "lightgray"
-          }}>Contact me</h1>
+      <h1 className='mt-28 flex items-center justify-center'
+        style={{
+          fontFamily: '"Patua One", "serif"',
+          fontWeight: 300,
+          fontStyle: "normal",
+          fontSize: "4rem",
+          color: "lightgray"
+        }}>Get in touch</h1>
 
-        <div className='flex items-start'>
-
-          {/* Polaroid div */}
-          <div
-            className="bg-white shadow-lg rounded-sm p-2 transform -rotate-3 w-64 ml-32 mt-10 flex flex-col"
-          >
-            <img src="vyakhya_professional.jpg" alt="pic" className='h-4/6 mb-10 w-full object-cover rounded-sm' />
-          </div>
-
-          {/* Text div */}
-          <div
-            className="mt-28 ml-60 font-semibold text-white flex flex-col text-wrap w-1/2 text-2xl"
-          >
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia excepturi, hic fugit corporis eaque ex, odit ea quo ab quaerat mollitia magni a quos voluptatibus repellat, provident nobis nemo iste?
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non quia ipsam qui id soluta impedit necessitatibus quam et, consectetur ipsum, culpa ut deleniti dolores alias beatae veniam quas saepe pariatur.
-            </p>
-            <p>linkedin</p>
-            <p>github</p>
-            <p>x</p>
-          </div>
-
+      <div className='flex justify-start items-start space-x-60 mt-14'>
+        {/* Polaroid div */}
+        <div className="bg-white shadow-lg rounded-sm p-2 transform -rotate-3 w-64 ml-32 flex flex-col">
+          <img src="vyakhya_professional.jpg" alt="pic" className='h-4/6 mb-10 w-full object-cover rounded-sm' />
         </div>
-      {/* </section> */}
 
-      {/* 2nd card */}
-      {/* <section
-        className="min-h-screen w-full bg-pink-950 rounded-3xl sticky top-28"
-      >
-        <h1 className='text-8xl mt-28 flex items-center justify-center'
-          style={{
-            fontFamily: '"Patua One", "serif"',
-            fontWeight: 300,
-            fontStyle: "normal",
-            fontSize: "6rem",
-            color: "lightgray"
-          }}>Contact me</h1> */}
+        {/* Form div */}
+        <div className="text-white flex flex-col text-md w-1/2">
+          <form className="space-y-6">
+            {/* Name */}
+            <div className="flex flex-col">
+              <label htmlFor="name" className="mb-2">Name</label>
+              
+              <div className='relative'>
+                <i className="fa-solid fa-user absolute text-gray-600 top-3 left-1.5"></i>
+              <input
+                type="text"
+                id="name"
+                placeholder="Enter name"
+                className="pl-10 pr-96 py-2 rounded-lg border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 left-3"
+              />
+              </div>
+            </div>
 
-        {/* <div className='flex items-start'> */}
+            {/* Email */}
+            <div className="flex flex-col">
+              <label htmlFor="email" className="mb-2">Email</label>
+              <div className='relative'>
+                <i className="fa-solid fa-envelope absolute text-gray-600 top-3 left-1.5"></i>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter email"
+                className="pl-10 pr-96 py-2 rounded-lg border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              </div>
+            </div>
 
-          {/* Polaroid div */}
-          {/* <div
-            className="bg-white shadow-lg rounded-sm p-2 transform -rotate-3 w-64 ml-32 mt-10 flex flex-col"
-          >
-            <img src="vyakhya_professional.jpg" alt="pic" className='h-4/6 mb-10 w-full object-cover rounded-sm' />
-          </div> */}
+            {/* message textbox */}
+            <div className='flex flex-col'>
+              <label htmlFor='message' className='mb-2'>Message</label>
+              <div className='relative'>
+              <i className="fa-solid fa-pencil absolute text-gray-600 top-5 left-1.5"></i>
+              <textarea id="message" placeholder='Enter message' className='pl-10 pr-96 py-3 rounded-lg border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-blue-500' />
+              </div>
+            </div>
 
-          {/* Text div */}
-          {/* <div
-            className="mt-28 ml-60 font-semibold text-white flex flex-col text-wrap w-1/2 text-2xl"
-          >
-            <p>Vyakhya is a creative frontend, backend and AI developer with experience in building responsive and user friendly web applications.
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non quia ipsam qui id soluta impedit necessitatibus quam et, consectetur ipsum, culpa ut deleniti dolores alias beatae veniam quas saepe pariatur.
-            </p>
-          </div>
-
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="px-8 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 transition-transform duration-300 hover:scale-110 font-semibold text-lg"
+              onClick={()=>{
+                //handle submissions
+              }}
+            >
+              Send message
+            </button>
+          </form>
         </div>
-      </section> */}
-    </div >
+      </div>
+
+      {/* social links */}
+      <div className='fixed bottom-6 right-20 flex space-x-4 text-2xl' >
+        <a href="https://www.linkedin.com/in/vyakhyaagoyal" target="_blank" rel="noopener noreferrer" className='hover:scale-110 transition'><i className="fa-brands fa-linkedin"></i></a>
+        <a href="https://github.com/vyakhyaagoyal" target="_blank" rel="noopener noreferrer" className='hover:scale-110 transition'><i className="fa-brands fa-github"></i></a>
+        <a href="https://x.com/vyakhyaagoyal" target="_blank" rel="noopener noreferrer" className='hover:scale-110 transition'><i className="fa-brands fa-x-twitter"></i></a>
+        <a href="mailto:vyakhyagoyal22@gmail.com" target="_blank" rel="noopener noreferrer" className='hover:scale-110 transition'><i className="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
   )
 }
 
 export default Contact
-
-// import React, { useRef } from "react";
-// import { motion, useScroll, useTransform } from "framer-motion";
-
-// const HorizontalScrollCards = () => {
-//   const containerRef = useRef(null);
-
-//   // Track scroll progress inside this section
-//   const { scrollYProgress } = useScroll({
-//     target: containerRef,
-//     offset: ["start start", "end start"],
-//   });
-
-//   // Smooth horizontal movement (leftward)
-//   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
-
-//   return (
-//     <section ref={containerRef} className="h-[300vh] relative bg-gray-900">
-//       {/* Sticky wrapper */}
-//       <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-//         <motion.div
-//           style={{ x }}
-//           transition={{ type: "spring", stiffness: 50, damping: 20 }} // Smooth motion
-//           className="flex gap-10"
-//         >
-//           {/* Card 1 */}
-//           <div className="min-w-[80vw] h-[90vh] bg-blue-600 rounded-3xl flex items-center justify-center text-white text-6xl shadow-xl">
-//             Card 1
-//           </div>
-
-//           {/* Card 2 */}
-//           <div className="min-w-[80vw] h-[90vh] bg-pink-600 rounded-3xl flex items-center justify-center text-white text-6xl shadow-xl">
-//             Card 2
-//           </div>
-
-//           {/* Card 3 */}
-//           <div className="min-w-[80vw] h-[90vh] bg-green-600 rounded-3xl flex items-center justify-center text-white text-6xl shadow-xl">
-//             Card 3
-//           </div>
-//         </motion.div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default HorizontalScrollCards;
-
