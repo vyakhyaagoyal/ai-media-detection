@@ -36,6 +36,7 @@ const UploadMedia = () => {
             const detectRes = await axios.post(`${host}/api/detect`, { filePath: uploadedURL });
 
             setResult(detectRes.data);
+            console.log("detection result:", detectRes.data);
             setFile(null);
             if (fileInputRef.current) fileInputRef.current.value = "";
         } catch (error) {
@@ -54,7 +55,7 @@ const UploadMedia = () => {
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
-                className="text-7xl font-extrabold mt-24 text-center text-white font-semibold"
+                className="text-7xl mt-24 text-center text-white font-semibold"
                 style={{
                     fontFamily: '"Patua One", "serif"',
                     fontWeight: 300,
