@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({setisAuthenticated}) => {
-  const host = "http://localhost:5000";
+  const host = "https://ai-media-detection.onrender.com";
   const [auth, setAuth] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();

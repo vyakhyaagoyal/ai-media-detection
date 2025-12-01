@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/')
+    axios.get('https://ai-media-detection.onrender.com/')
       .then((res) => {
         console.log(res.data);
       })

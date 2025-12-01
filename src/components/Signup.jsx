@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Signup = ({setisAuthenticated}) => {
-    const host = "http://localhost:5000";
+    const host = "https://ai-media-detection.onrender.com";
     const [auth, setAuth] = useState({ name: "", email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();

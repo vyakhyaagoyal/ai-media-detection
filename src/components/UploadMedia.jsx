@@ -4,7 +4,7 @@ import Toast from "./Toast";
 import { motion } from "framer-motion";
 
 const UploadMedia = () => {
-    const host = "http://localhost:5000";
+    const host = "http://localhost:https://ai-media-detection.onrender.com";
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
