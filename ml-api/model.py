@@ -1,26 +1,19 @@
 import os, sys
 
-# ---- FIX PYTHON PATHS FOR RENDER ----
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.dirname(BASE_DIR)  # this goes to ml-api parent directory
 
-# Path to FaceForensics folder
-FF_DIR = os.path.join(BASE_DIR, "FaceForensics")
-if FF_DIR not in sys.path:
-    sys.path.insert(0, FF_DIR)
+# Add ml-api to sys.path
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
-# Path to classification folder
-CLASS_DIR = os.path.join(FF_DIR, "classification")
-if CLASS_DIR not in sys.path:
-    sys.path.insert(0, CLASS_DIR)
+# Add ml-api parent (so FaceForensics resolves correctly)
+if PARENT_DIR not in sys.path:
+    sys.path.insert(0, PARENT_DIR)
 
-# Path to network folder
-NET_DIR = os.path.join(CLASS_DIR, "network")
-if NET_DIR not in sys.path:
-    sys.path.insert(0, NET_DIR)
 
 # ---- IMPORT MODEL ----
-from xception import xception  # THIS IS THE CORRECT IMPORT
+from FaceForensics.classification.network.xception import xception
 
 # -------------------------------------
 import torch
