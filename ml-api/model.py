@@ -1,12 +1,28 @@
 import os, sys
 
+# ---- FIX PYTHON PATHS FOR RENDER ----
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FF_PATH = os.path.join(BASE_DIR, "FaceForensics")
 
-# Add FaceForensics root to sys.path
-if FF_PATH not in sys.path:
-    sys.path.insert(0, FF_PATH)
+# Path to FaceForensics folder
+FF_DIR = os.path.join(BASE_DIR, "FaceForensics")
+if FF_DIR not in sys.path:
+    sys.path.insert(0, FF_DIR)
 
+# Path to classification folder
+CLASS_DIR = os.path.join(FF_DIR, "classification")
+if CLASS_DIR not in sys.path:
+    sys.path.insert(0, CLASS_DIR)
+
+# Path to network folder
+NET_DIR = os.path.join(CLASS_DIR, "network")
+if NET_DIR not in sys.path:
+    sys.path.insert(0, NET_DIR)
+
+# ---- IMPORT MODEL ----
+from xception import xception  # THIS IS THE CORRECT IMPORT
+
+# -------------------------------------
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -14,13 +30,13 @@ from torchvision import transforms
 from PIL import Image
 import cv2
 
-from classification.network.xception import xception
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 class TransferModel(nn.Module):
     def __init__(self, model_path):
         super(TransferModel, self).__init__()
+
         # Xception with 2 output classes
         self.model = xception(num_classes=2, pretrained=None)
 
@@ -35,44 +51,42 @@ class TransferModel(nn.Module):
             new_state_dict[k] = v
 
         model_dict = self.model.state_dict()
-        pretrained_dict = {k: v for k, v in new_state_dict.items()
-                           if k in model_dict and v.size() == model_dict[k].size()}
+        pretrained_dict = {
+            k: v for k, v in new_state_dict.items()
+            if k in model_dict and v.size() == model_dict[k].size()
+        }
         model_dict.update(pretrained_dict)
         self.model.load_state_dict(model_dict)
 
         self.model.to(device)
         self.model.eval()
 
-        #print(f"Loaded {len(pretrained_dict)}/{len(model_dict)} layers from checkpoint.")
-
-        # Preprocessing for Xception input
+        # Preprocessing
         self.transform = transforms.Compose([
             transforms.Resize((299, 299)),
             transforms.ToTensor(),
-            transforms.Normalize([0.5]*3, [0.5]*3)   # adjust if model trained differently
+            transforms.Normalize([0.5] * 3, [0.5] * 3)
         ])
 
     def forward(self, x):
         return self.model(x)
 
     def predict(self, file_path):
-        """
-        Takes an image or video file path and returns (label, confidence)
-        """
         frames = []
 
-        # 1️⃣ If image
+        # Image
         if file_path.lower().endswith((".jpg", ".jpeg", ".png")):
             img = Image.open(file_path).convert("RGB")
             frames.append(self.transform(img))
 
-        # 2️⃣ If video, take 1 frame from middle
+        # Video
         elif file_path.lower().endswith((".mp4", ".avi", ".mov")):
             cap = cv2.VideoCapture(file_path)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-            cap.set(cv2.CAP_PROP_POS_FRAMES, frame_count // 2)  # middle frame
+            cap.set(cv2.CAP_PROP_POS_FRAMES, frame_count // 2)
             ret, frame = cap.read()
             cap.release()
+
             if ret:
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 img = Image.fromarray(frame)
@@ -82,7 +96,6 @@ class TransferModel(nn.Module):
         else:
             raise ValueError("Unsupported file type")
 
-        # Stack frames into batch
         input_tensor = torch.stack(frames).to(device)
 
         with torch.no_grad():
