@@ -1,12 +1,20 @@
+import os, sys
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FF_PATH = os.path.join(BASE_DIR, "FaceForensics")
+
+# Add FaceForensics root to sys.path
+if FF_PATH not in sys.path:
+    sys.path.insert(0, FF_PATH)
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import transforms
 from PIL import Image
 import cv2
-import os
 
-from FaceForensics.classification.network.xception import xception  # adjust path if needed
+from classification.network.xception import xception
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
