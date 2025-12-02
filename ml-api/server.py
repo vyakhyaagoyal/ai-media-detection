@@ -2,9 +2,9 @@ import sys, os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
-sys.path.insert(0, os.path.join(BASE_DIR, "FaceForensics"))
-sys.path.insert(0, os.path.join(BASE_DIR, "FaceForensics", "classification"))
-sys.path.insert(0, os.path.join(BASE_DIR, "FaceForensics", "classification", "network"))
+sys.path.insert(0, os.path.join(BASE_DIR, "faceforensics"))
+sys.path.insert(0, os.path.join(BASE_DIR, "faceforensics", "classification"))
+sys.path.insert(0, os.path.join(BASE_DIR, "faceforensics", "classification", "network"))
 
 from flask import Flask, request, jsonify
 from model import TransferModel
@@ -19,7 +19,7 @@ model_path = os.path.join(os.path.dirname(__file__), "xception-b5690688.pth")
 model = TransferModel(model_path)  
 model.eval()
 
-@app.route("/detect", methods=["POST"])
+@app.route("/detect", methods=["POST"]) 
 def detect():
     data = request.get_json()
     if not data or "url" not in data:

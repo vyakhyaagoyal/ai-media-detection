@@ -8,7 +8,7 @@ if PROJECT_DIR not in sys.path:
     sys.path.insert(0, PROJECT_DIR)
 
 # Add FaceForensics manually
-FF_DIR = os.path.join(BASE_DIR, "FaceForensics")
+FF_DIR = os.path.join(BASE_DIR, "faceforensics")
 CLASS_DIR = os.path.join(FF_DIR, "classification")
 NET_DIR = os.path.join(CLASS_DIR, "network")
 
@@ -16,7 +16,7 @@ sys.path.insert(0, FF_DIR)
 sys.path.insert(0, CLASS_DIR)
 sys.path.insert(0, NET_DIR)
 
-from FaceForensics.classification.network.xception import xception
+from faceforensics.classification.network.xception import xception
 
 # -------------------------------------
 import torch
