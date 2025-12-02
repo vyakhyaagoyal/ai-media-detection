@@ -1,13 +1,21 @@
 import os, sys
 
-# Path to root of ml-api folder
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = os.path.dirname(BASE_DIR)
 
-# Add ml-api to system path
-if BASE_DIR not in sys.path:
-    sys.path.insert(0, BASE_DIR)
+# Add (ml-api) to PYTHONPATH
+if PROJECT_DIR not in sys.path:
+    sys.path.insert(0, PROJECT_DIR)
 
-# Now import using the full package path
+# Add FaceForensics manually
+FF_DIR = os.path.join(BASE_DIR, "FaceForensics")
+CLASS_DIR = os.path.join(FF_DIR, "classification")
+NET_DIR = os.path.join(CLASS_DIR, "network")
+
+sys.path.insert(0, FF_DIR)
+sys.path.insert(0, CLASS_DIR)
+sys.path.insert(0, NET_DIR)
+
 from FaceForensics.classification.network.xception import xception
 
 # -------------------------------------
