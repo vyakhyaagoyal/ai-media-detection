@@ -1,18 +1,13 @@
 import os, sys
 
+# Path to root of ml-api folder
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PARENT_DIR = os.path.dirname(BASE_DIR)  # this goes to ml-api parent directory
 
-# Add ml-api to sys.path
+# Add ml-api to system path
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
-# Add ml-api parent (so FaceForensics resolves correctly)
-if PARENT_DIR not in sys.path:
-    sys.path.insert(0, PARENT_DIR)
-
-
-# ---- IMPORT MODEL ----
+# Now import using the full package path
 from FaceForensics.classification.network.xception import xception
 
 # -------------------------------------

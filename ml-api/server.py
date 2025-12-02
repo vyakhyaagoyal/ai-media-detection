@@ -1,7 +1,7 @@
-import sys, os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "FaceForensics"))
-
+import os, sys
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
 from flask import Flask, request, jsonify
 from model import TransferModel   # your FaceForensics++ model wrapper
