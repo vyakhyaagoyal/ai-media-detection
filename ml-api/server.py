@@ -1,14 +1,14 @@
-import os, sys
+import sys, os
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-if BASE_DIR not in sys.path:
-    sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, os.path.join(BASE_DIR, "FaceForensics"))
+sys.path.insert(0, os.path.join(BASE_DIR, "FaceForensics", "classification"))
+sys.path.insert(0, os.path.join(BASE_DIR, "FaceForensics", "classification", "network"))
 
 from flask import Flask, request, jsonify
-from model import TransferModel   # your FaceForensics++ model wrapper
-# import torch
-# import cv2
+from model import TransferModel
 import requests
-# import numpy as np
 import tempfile
 from flask_cors import CORS
 
